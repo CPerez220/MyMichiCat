@@ -1,62 +1,69 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import api from '../services/apiService';
 
 const ProfileForm = () => {
-  const { id } = useParams(); // For editing an existing profile
-  const navigate = useNavigate();
-
   const [profile, setProfile] = useState({
     name: '',
     description: '',
-    image: null,
+    image: '',
   });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProfile({ ...profile, [name]: value });
   };
 
-  const handleImageUpload = (e) => {
-    setProfile({ ...profile, image: e.target.files[0] });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Replace with API call for saving data
-    console.log('Profile saved:', profile);
-    navigate('/dashboard'); // Redirect to dashboard
+    try {
+      await api.post('/profiles', profile);
+      navigate('/dashboard'); // Redirect to dashboard after successful creation
+    } catch (err) {
+      console.error('Error creating profile:', err);
+      setError('Failed to create profile');
+    }
   };
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">{id ? 'Edit Profile' : 'Add New Profile'}</h1>
+      <h1 className="text-2xl font-bold mb-4">Add New Profile</h1>
+      {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-gray-700">Name</label>
+          <label className="block mb-2">Name</label>
           <input
             type="text"
             name="name"
             value={profile.name}
             onChange={handleChange}
+            className="w-full p-2 border rounded"
             required
-            className="w-full px-3 py-2 border rounded-md"
           />
         </div>
         <div>
-          <label className="block text-gray-700">Description</label>
+          <label className="block mb-2">Description</label>
           <textarea
             name="description"
             value={profile.description}
             onChange={handleChange}
+            className="w-full p-2 border rounded"
             required
-            className="w-full px-3 py-2 border rounded-md"
           />
         </div>
         <div>
-          <label className="block text-gray-700">Upload Image</label>
-          <input type="file" onChange={handleImageUpload} className="block" />
+          <label className="block mb-2">Image URL</label>
+          <input
+            type="text"
+            name="image"
+            value={profile.image}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+          />
         </div>
-        <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md">
+        <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
           Save Profile
         </button>
       </form>
