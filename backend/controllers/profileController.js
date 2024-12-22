@@ -15,9 +15,20 @@ exports.createProfile = async (req, res) => {
   const { name, description, image } = req.body;
 
   try {
-    const profile = await Profile.create({ name, description, image });
+    if (!name || !description) {
+      return res.status(400).json({ message: 'Name and description are required' });
+    }
+
+    const profile = await Profile.create({
+      user: req.user.id, // Ensure req.user is set if profiles are tied to users
+      name,
+      description,
+      image,
+    });
+
     res.status(201).json(profile);
   } catch (err) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('Error creating profile:', err); // Log the exact error
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 };
