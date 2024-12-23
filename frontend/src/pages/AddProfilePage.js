@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/apiService';
 
-const ProfileForm = () => {
-  const { id } = useParams(); // Get profile ID from the URL
+const AddProfilePage = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
     name: '',
@@ -11,24 +10,6 @@ const ProfileForm = () => {
     image: '',
   });
   const [error, setError] = useState('');
-  const [isEditing, setIsEditing] = useState(false); // Track if editing an existing profile
-
-  useEffect(() => {
-    // Only fetch profile data when editing
-    if (id) {
-      const fetchProfile = async () => {
-        try {
-          const response = await api.get(`/profiles/${id}`);
-          setProfile(response.data); // Populate form with existing data
-          setIsEditing(true); // Enable editing mode
-        } catch (err) {
-          console.error('Error fetching profile:', err);
-          setError('Failed to load profile.');
-        }
-      };
-      fetchProfile();
-    }
-  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,30 +19,21 @@ const ProfileForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let updatedProfile;
-      if (isEditing) {
-        // Update the profile
-        const response = await api.put(`/profiles/${id}`, profile);
-        updatedProfile = response.data;
-      } else {
-        // Create a new profile
-        const response = await api.post('/profiles', profile);
-        updatedProfile = response.data;
-      }
-      navigate('/dashboard', { state: { updatedProfile } }); // Pass updated profile back to dashboard
+      const response = await api.post('/profiles', profile);
+      navigate('/dashboard', { state: { updatedProfile: response.data } });
     } catch (err) {
-      console.error('Error saving profile:', err);
-      setError('Failed to save profile. Please try again.');
+      console.error('Error creating profile:', err);
+      setError('Failed to create profile. Please try again.');
     }
   };
 
   const handleGoBack = () => {
-    navigate('/dashboard'); // Redirect to dashboard without saving
+    navigate('/dashboard'); // Redirect back to the dashboard without saving
   };
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">{isEditing ? 'Edit Profile' : 'Add New Profile'}</h1>
+      <h1 className="text-2xl font-bold mb-4">Add New Profile</h1>
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -97,7 +69,7 @@ const ProfileForm = () => {
         </div>
         <div className="flex space-x-4">
           <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-            {isEditing ? 'Save Changes' : 'Create Profile'}
+            Create Profile
           </button>
           <button
             type="button"
@@ -112,4 +84,4 @@ const ProfileForm = () => {
   );
 };
 
-export default ProfileForm;
+export default AddProfilePage;

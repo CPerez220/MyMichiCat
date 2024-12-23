@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate} from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/apiService';
 
-const ProfileForm = () => {
+const EditProfilePage = () => {
   const { id } = useParams(); // Get profile ID from the URL
   const navigate = useNavigate();
   const [profile, setProfile] = useState({
@@ -11,23 +11,18 @@ const ProfileForm = () => {
     image: '',
   });
   const [error, setError] = useState('');
-  const [isEditing, setIsEditing] = useState(false); // Track if editing an existing profile
 
   useEffect(() => {
-    // Only fetch profile data when editing
-    if (id) {
-      const fetchProfile = async () => {
-        try {
-          const response = await api.get(`/profiles/${id}`);
-          setProfile(response.data); // Populate form with existing data
-          setIsEditing(true); // Enable editing mode
-        } catch (err) {
-          console.error('Error fetching profile:', err);
-          setError('Failed to load profile.');
-        }
-      };
-      fetchProfile();
-    }
+    const fetchProfile = async () => {
+      try {
+        const response = await api.get(`/profiles/${id}`);
+        setProfile(response.data); // Prepopulate the form with the profile data
+      } catch (err) {
+        console.error('Error fetching profile:', err);
+        setError(''); // Remove error message, no need to display it
+      }
+    };
+    fetchProfile();
   }, [id]);
 
   const handleChange = (e) => {
@@ -38,30 +33,23 @@ const ProfileForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let updatedProfile;
-      if (isEditing) {
-        // Update the profile
-        const response = await api.put(`/profiles/${id}`, profile);
-        updatedProfile = response.data;
-      } else {
-        // Create a new profile
-        const response = await api.post('/profiles', profile);
-        updatedProfile = response.data;
-      }
-      navigate('/dashboard', { state: { updatedProfile } }); // Pass updated profile back to dashboard
+      const response = await api.put(`/profiles/${id}`, profile);
+      navigate('/dashboard', { state: { updatedProfile: response.data } }); // Pass the updated profile back to the dashboard
     } catch (err) {
-      console.error('Error saving profile:', err);
-      setError('Failed to save profile. Please try again.');
+      console.error('Error updating profile:', err);
+      setError('Failed to update profile. Please try again.');
     }
   };
 
   const handleGoBack = () => {
-    navigate('/dashboard'); // Redirect to dashboard without saving
+    navigate('/dashboard'); // Redirect back to the dashboard without saving
   };
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">{isEditing ? 'Edit Profile' : 'Add New Profile'}</h1>
+      <h1 className="text-2xl font-bold mb-4">
+        {profile.name ? `Editing "${profile.name}" profile` : 'Edit Profile'}
+      </h1>
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -97,7 +85,7 @@ const ProfileForm = () => {
         </div>
         <div className="flex space-x-4">
           <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
-            {isEditing ? 'Save Changes' : 'Create Profile'}
+            Save Changes
           </button>
           <button
             type="button"
@@ -112,4 +100,4 @@ const ProfileForm = () => {
   );
 };
 
-export default ProfileForm;
+export default EditProfilePage;
