@@ -13,7 +13,10 @@ connectDB();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['https://frontend-rwqry1tu1-mymichicats-projects.vercel.app', 'http://localhost:3000'], // Replace with your Vercel domain
+  credentials: true, // Allow credentials like tokens to be sent
+}));
 app.use(bodyParser.json());
 
 // Routes
