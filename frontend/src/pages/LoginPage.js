@@ -16,14 +16,14 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       console.log('Sending request to /api/users/login'); // Debugging log
-      const response = await api.post('/api/users/login', credentials); // Add `/api` prefix here
+      const response = await api.post('/api/users/login', credentials); // Ensure `/api` prefix is present
       localStorage.setItem('token', response.data.token); // Save token to localStorage
       navigate('/dashboard'); // Redirect to dashboard
     } catch (err) {
       console.error('Error logging in:', err.response?.data || err.message);
       setError(err.response?.data?.message || 'Invalid credentials');
     }
-  };  
+  };    
 
   return (
     <div className="p-6">
