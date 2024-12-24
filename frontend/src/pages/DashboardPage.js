@@ -49,7 +49,7 @@ const DashboardPage = () => {
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
       {error && <p className="text-red-500">{error}</p>}
       <button
-        onClick={() => navigate('/api/profile/new')}
+        onClick={() => navigate('/profile/new')}
         className="px-4 py-2 bg-blue-500 text-white rounded mb-4"
       >
         Create New Profile
@@ -64,7 +64,7 @@ const DashboardPage = () => {
               <p>{profile.description}</p>
               <div className="mt-2 flex space-x-2">
                 <button
-                  onClick={() => navigate(`/profile/${profile._id}`, { state: { profile } })}
+                  onClick={() => navigate(`/api/profile/${profile._id}`, { state: { profile } })}
                   className="px-3 py-1 bg-yellow-500 text-white rounded"
                 >
                   Edit
