@@ -41,11 +41,11 @@ const ProfileForm = () => {
       let updatedProfile;
       if (isEditing) {
         // Update the profile
-        const response = await api.put(`/profiles/${id}`, profile);
+        const response = await api.put(`/api/profiles/${id}`, profile);
         updatedProfile = response.data;
       } else {
         // Create a new profile
-        const response = await api.post('/profiles', profile);
+        const response = await api.post('/api/profiles', profile);
         updatedProfile = response.data;
       }
       navigate('/dashboard', { state: { updatedProfile } }); // Pass updated profile back to dashboard
