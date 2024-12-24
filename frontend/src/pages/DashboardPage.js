@@ -63,6 +63,12 @@ const DashboardPage = () => {
               <h2 className="font-bold">{profile.name}</h2>
               <p>{profile.description}</p>
               <div className="mt-2 flex space-x-2">
+              <button
+                onClick={() => navigate(`/profile/${profile._id}/qrcode`, { state: { profile } })}
+                className="px-3 py-1 bg-green-500 text-white rounded"
+              >
+                QR Code
+              </button>
                 <button
                   onClick={() => navigate(`/profile/${profile._id}`, { state: { profile } })}
                   className="px-3 py-1 bg-yellow-500 text-white rounded"
