@@ -19,8 +19,8 @@ const LoginPage = () => {
       localStorage.setItem('token', response.data.token); // Save token to localStorage
       navigate('/dashboard'); // Redirect to dashboard
     } catch (err) {
-      console.error('Error logging in:', err);
-      setError('Invalid credentials');
+      console.error('Error logging in:', err.response?.data || err.message);
+      setError(err.response?.data?.message || 'Invalid credentials');
     }
   };
 

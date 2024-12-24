@@ -23,7 +23,7 @@ const SignUpPage = () => {
       navigate('/login'); // Redirect to login page after successful signup
     } catch (err) {
       console.error('Error during sign up:', err.response?.data || err.message);
-      setError('Failed to sign up. Please try again.');
+      setError(err.response?.data?.message || 'Failed to sign up. Please try again.');
     }
   };
 
