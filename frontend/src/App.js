@@ -21,7 +21,7 @@ function App() {
           <Route path="/profile/new" element={<AddProfilePage />} />
           <Route path="/profile/:id" element={<EditProfilePage />} />
           <Route path="/profile/:id" element={<ProfileForm />} />
-          <Route path="/qrcode/:id" element={<QRCodePage />} />
+          <Route path="/profile/:id/qrcode" element={<QRCodePage />} />
         </Routes>
       </Router>
     );

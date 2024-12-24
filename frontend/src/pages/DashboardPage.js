@@ -64,7 +64,7 @@ const DashboardPage = () => {
               <p>{profile.description}</p>
               <div className="mt-2 flex space-x-2">
               <button
-                onClick={() => navigate(`/profile/${profile._id}/qrcode`, { state: { profile } })}
+                onClick={() => navigate(`/profile/${profile._id}/qrcode`)}
                 className="px-3 py-1 bg-green-500 text-white rounded"
               >
                 QR Code

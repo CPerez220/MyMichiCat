@@ -5,6 +5,10 @@ import QRCode from 'react-qr-code';
 const QRCodePage = () => {
   const { id } = useParams(); // Fetch profile ID from URL
 
+  if (!id) {
+    return <p className="text-red-500">Error: Profile ID is missing!</p>;
+  }
+
   const profileLink = `https://mymichicat.com/profile/${id}`; // Example link
 
   return (
