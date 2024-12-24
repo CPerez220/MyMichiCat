@@ -15,7 +15,7 @@ const EditProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await api.get(`/profiles/${id}`);
+        const response = await api.get(`/api/profiles/${id}`);
         setProfile(response.data); // Prepopulate the form with the profile data
       } catch (err) {
         console.error('Error fetching profile:', err);
@@ -33,7 +33,7 @@ const EditProfilePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.put(`/profiles/${id}`, profile);
+      const response = await api.put(`/api/profiles/${id}`, profile);
       navigate('/dashboard', { state: { updatedProfile: response.data } }); // Pass the updated profile back to the dashboard
     } catch (err) {
       console.error('Error updating profile:', err);

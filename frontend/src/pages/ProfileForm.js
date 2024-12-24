@@ -18,7 +18,7 @@ const ProfileForm = () => {
     if (id) {
       const fetchProfile = async () => {
         try {
-          const response = await api.get(`/profiles/${id}`);
+          const response = await api.get(`/api/profiles/${id}`);
           setProfile(response.data); // Populate form with existing data
           setIsEditing(true); // Enable editing mode
         } catch (err) {

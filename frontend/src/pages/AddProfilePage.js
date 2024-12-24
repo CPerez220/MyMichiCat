@@ -19,7 +19,7 @@ const AddProfilePage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/profiles', profile);
+      const response = await api.post('/api/profiles', profile);
       navigate('/dashboard', { state: { updatedProfile: response.data } });
     } catch (err) {
       console.error('Error creating profile:', err);
