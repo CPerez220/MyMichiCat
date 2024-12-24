@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api', // Backend URL
+  baseURL: 'https://mymichicat-backend.onrender.com', // Backend URL
 });
 
 // Add a request interceptor to include the token
