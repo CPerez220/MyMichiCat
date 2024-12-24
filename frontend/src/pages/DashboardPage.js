@@ -12,13 +12,13 @@ const DashboardPage = () => {
     // Fetch profiles initially
     const fetchProfiles = async () => {
       try {
-        const response = await api.get('/profiles');
+        const response = await api.get('/api/profiles'); // Add the `/api` prefix
         setProfiles(response.data);
       } catch (err) {
-        console.error('Error fetching profiles:', err);
+        console.error('Error fetching profiles:', err.response?.data || err.message);
         setError('Failed to fetch profiles');
       }
-    };
+    };    
 
     fetchProfiles();
   }, []);
@@ -32,17 +32,17 @@ const DashboardPage = () => {
         )
       );
     }
-  }, [location.state]);
+  }, [location.state]);  
   
   const handleDelete = async (id) => {
     try {
-      await api.delete(`/profiles/${id}`);
+      await api.delete(`/api/profiles/${id}`); // Add the `/api` prefix
       setProfiles(profiles.filter((profile) => profile._id !== id));
     } catch (err) {
-      console.error('Error deleting profile:', err);
+      console.error('Error deleting profile:', err.response?.data || err.message);
       setError('Failed to delete profile');
     }
-  };
+  };  
 
   return (
     <div className="p-6">
