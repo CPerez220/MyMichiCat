@@ -12,7 +12,7 @@ const DashboardPage = () => {
     // Fetch profiles initially
     const fetchProfiles = async () => {
       try {
-        const response = await api.get('/api/profiles'); // Add the `/api` prefix
+        const response = await api.get('/api/profiles'); // Added the `/api` prefix
         setProfiles(response.data);
       } catch (err) {
         console.error('Error fetching profiles:', err.response?.data || err.message);
@@ -36,7 +36,7 @@ const DashboardPage = () => {
   
   const handleDelete = async (id) => {
     try {
-      await api.delete(`/api/profiles/${id}`); // Add the `/api` prefix
+      await api.delete(`/api/profiles/${id}`); // Added the `/api` prefix
       setProfiles(profiles.filter((profile) => profile._id !== id));
     } catch (err) {
       console.error('Error deleting profile:', err.response?.data || err.message);
@@ -64,7 +64,7 @@ const DashboardPage = () => {
               <p>{profile.description}</p>
               <div className="mt-2 flex space-x-2">
                 <button
-                  onClick={() => navigate(`/api/profile/${profile._id}`, { state: { profile } })}
+                  onClick={() => navigate(`/profile/${profile._id}`, { state: { profile } })}
                   className="px-3 py-1 bg-yellow-500 text-white rounded"
                 >
                   Edit
