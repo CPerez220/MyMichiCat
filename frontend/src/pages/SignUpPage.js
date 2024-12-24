@@ -19,7 +19,8 @@ const SignUpPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/users/register', formData); // Ensure endpoint and payload are correct
+      // Correct API endpoint with `/api` prefix
+      await api.post('/api/users/register', formData);
       navigate('/login'); // Redirect to login page after successful signup
     } catch (err) {
       console.error('Error during sign up:', err.response?.data || err.message);
