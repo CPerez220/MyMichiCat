@@ -64,7 +64,7 @@ const DashboardPage = () => {
               <p>{profile.description}</p>
               <div className="mt-2 flex space-x-2">
                 <button
-                  onClick={() => navigate(`/api/profile/${profile._id}`, { state: { profile } })}
+                  onClick={() => navigate(`/profile/${profile._id}`, { state: { profile } })}
                   className="px-3 py-1 bg-yellow-500 text-white rounded"
                 >
                   Edit
