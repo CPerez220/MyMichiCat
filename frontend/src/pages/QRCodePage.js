@@ -5,7 +5,7 @@ import QRCode from 'react-qr-code';
 const QRCodePage = () => {
   const { id } = useParams(); // Fetch profile ID from URL
 
-  const profileLink = `https://mymichicat.com/api/profile/${id}`; // Example link
+  const profileLink = `https://mymichicat.com/profile/${id}`; // Example link
 
   return (
     <div className="p-6">
