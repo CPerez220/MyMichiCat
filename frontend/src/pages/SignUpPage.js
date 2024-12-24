@@ -19,13 +19,15 @@ const SignUpPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/api/users/register', formData); // Corrected endpoint
-      navigate('/login'); // Redirect to login page after successful signup
+      console.log('Sending request to /api/users/register'); // Debugging log
+      const response = await api.post('/api/users/register', formData); // Ensure `/api` is present
+      console.log('API response:', response.data); // Debugging log
+      navigate('/login'); // Redirect to login page
     } catch (err) {
       console.error('Error during sign up:', err.response?.data || err.message);
       setError(err.response?.data?.message || 'Failed to sign up. Please try again.');
     }
-  };
+  };  
 
   return (
     <div className="p-6">
